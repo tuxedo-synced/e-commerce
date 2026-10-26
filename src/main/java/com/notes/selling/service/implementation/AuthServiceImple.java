@@ -45,10 +45,10 @@ public class AuthServiceImple implements AuthService {
         userDetails.setPassword(
                 passwordEncoder.encode(userDetailsDto.getPassword())
         );
-
         userDetails.setProvider(Provider.LOCAL);
         userDetails.setOnline(false);
         userDetails.setRole(userDetailsDto.getRole());
+        userDetails.setProviderId(null);
         authRepository.save(userDetails);
     }
 }

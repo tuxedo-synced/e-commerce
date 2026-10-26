@@ -9,6 +9,7 @@ import com.notes.selling.security.service.blueprint.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -24,6 +26,7 @@ public class CustomOAuth2UserServiceImple extends DefaultOAuth2UserService imple
 
     private final AuthRepository authRepository ;
     private final ModelMapper modelMapper;
+    private final PasswordEncoder passwordEncoder ;
 
     private String subId ;
     private String email ;
@@ -67,7 +70,7 @@ public class CustomOAuth2UserServiceImple extends DefaultOAuth2UserService imple
         dto.setUsername(name);
         dto.setEmail(email);
         dto.setProvider(oauthProvider);
-        dto.setPassword(null);
+        dto.setPassword(passwordEncoder.encode(UUID.randomUUID().toString()));
         dto.setRole(Role.BUYER);
 
         register(dto);
