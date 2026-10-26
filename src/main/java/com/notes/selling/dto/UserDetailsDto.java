@@ -16,6 +16,7 @@ import lombok.ToString;
 @ToString
 public class UserDetailsDto {
     private UUID id ;
+    private String providerId ;
     private String username ;
     private String email ;
     private String password ;

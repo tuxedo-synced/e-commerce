@@ -1,5 +1,6 @@
 package com.notes.selling.security.config;
 
+import com.notes.selling.service.blueprint.CustomOAuth2UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,11 +29,7 @@ public class SecurityConfig {
 
     private final JwtFilter jwtFilter;
     private final AuthenticationSuccessHandler authenticationSuccessHandler;
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+    private final CustomOAuth2UserService customOAuth2UserService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) {
@@ -50,7 +47,8 @@ public class SecurityConfig {
                                 .anyRequest().authenticated())
                 .oauth2Login(oauth -> oauth
                         .loginPage("/login")
-                        .successHandler(authenticationSuccessHandler)
+                        .userInfoEndpoint(userInfo -> userInfo.userService(customOAuth2UserService))
+                        .defaultSuccessUrl("/buyer/interface", true)
                         .failureUrl("/login?error=true")
                         .permitAll())
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
