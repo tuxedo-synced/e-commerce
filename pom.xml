@@ -104,14 +104,6 @@
             <artifactId>tomcat-embed-jasper</artifactId>
         </dependency>
 
-
-<!--        the below dependencies only for deployment -->
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-
     </dependencies>
 
     <build>
