@@ -22,7 +22,7 @@ public class AuthServiceImple implements AuthService {
 
     @Override
     public Boolean verify(UserDetailsDto userDetailsDto) {
-
+        System.out.println(userDetailsDto);
         String usernameRegex = "^[a-zA-Z0-9_]{3,20}$";
         String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
         String passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=!]).{8,}$";
@@ -48,7 +48,7 @@ public class AuthServiceImple implements AuthService {
 
         userDetails.setProvider(Provider.LOCAL);
         userDetails.setOnline(false);
-
+        userDetails.setRole(userDetailsDto.getRole());
         authRepository.save(userDetails);
     }
 }

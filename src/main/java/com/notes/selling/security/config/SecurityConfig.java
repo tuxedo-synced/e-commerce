@@ -50,14 +50,13 @@ public class SecurityConfig {
                                 .anyRequest().authenticated())
                 .oauth2Login(oauth -> oauth
                         .loginPage("/login")
-                        .defaultSuccessUrl("/buyer/interface", true)
+                        .successHandler(authenticationSuccessHandler)
                         .failureUrl("/login?error=true")
                         .permitAll())
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin(form -> form
                         .loginPage("/login")
                         .successHandler(authenticationSuccessHandler)
-                        .defaultSuccessUrl("/buyer/interface")
                         .failureUrl("/login?error=true")
                         .permitAll());
         return http.build();

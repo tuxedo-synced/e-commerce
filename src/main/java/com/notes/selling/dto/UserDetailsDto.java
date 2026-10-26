@@ -4,13 +4,16 @@ import java.util.UUID;
 
 import com.notes.selling.helper.Provider;
 
+import com.notes.selling.helper.Role;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter 
 @Setter 
-@RequiredArgsConstructor 
+@RequiredArgsConstructor
+@ToString
 public class UserDetailsDto {
     private UUID id ;
     private String username ;
@@ -18,5 +21,5 @@ public class UserDetailsDto {
     private String password ;
     private Provider provider ;
     private boolean isOnline ;
-    private String role ;
+    private Role role ;
 }

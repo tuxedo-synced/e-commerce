@@ -24,7 +24,11 @@ public class AuthenticationHandler implements AuthenticationSuccessHandler {
 
         if(admin) targetUrl = "/admin/interface";
         else if(buyer) targetUrl = "/buyer/interface";
-        else targetUrl = "/seller/interface";
+        else if(seller) targetUrl = "/seller/interface";
+        else{
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);
+            return;
+        }
         response.sendRedirect(request.getContextPath() + targetUrl);
     }
 }
