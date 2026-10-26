@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.notes.selling.security.helper.JwtFilter;
@@ -26,6 +27,7 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfig {
 
     private final JwtFilter jwtFilter;
+    private final AuthenticationSuccessHandler authenticationSuccessHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -41,17 +43,21 @@ public class SecurityConfig {
                                 .requestMatchers("/", "/home", "/login", "/register", "/css/**", "/oauth2/**",
                                         "/login/oauth2/**")
                                 .permitAll()
+                                .requestMatchers("/buyer/**").hasRole("BUYER")
+                                .requestMatchers("/admin/**").hasRole("ADMIN")
+                                .requestMatchers("/seller/**").hasRole("SELLER")
                                 .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
                                 .anyRequest().authenticated())
                 .oauth2Login(oauth -> oauth
                         .loginPage("/login")
-                        .defaultSuccessUrl("/interface", true)
+                        .defaultSuccessUrl("/buyer/interface", true)
                         .failureUrl("/login?error=true")
                         .permitAll())
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/interface", true)
+                        .successHandler(authenticationSuccessHandler)
+                        .defaultSuccessUrl("/buyer/interface")
                         .failureUrl("/login?error=true")
                         .permitAll());
         return http.build();

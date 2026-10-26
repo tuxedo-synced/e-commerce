@@ -1,5 +1,6 @@
 package com.notes.selling.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -55,9 +56,15 @@ public class MainController {
         return "error";
     }
 
-    @GetMapping("/interface")
-    public String interfaceM() {
+    @PreAuthorize("hasRole('BUYER')")
+    @GetMapping("/buyer/interface")
+    public String interfaceB() {
         return "interface";
     }
 
+    @PreAuthorize("hasRole('SELLER')")
+    @GetMapping("/seller/interface")
+    public String interfaceS() {
+        return "interface";
+    }
 }

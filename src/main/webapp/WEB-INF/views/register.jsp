@@ -70,6 +70,20 @@ pageEncoding="UTF-8"%>
                 required
             />
 
+            <div class="role-selection">
+                <p>Select your role</p>
+
+                <label>
+                    <input type="radio" name="role" value="SELLER" required />
+                    Seller
+                </label>
+
+                <label>
+                    <input type="radio" name="role" value="BUYER" required />
+                    Buyer
+                </label>
+            </div>
+
             <button type="submit">Register</button>
 
         </form>
