@@ -18,5 +18,6 @@ public interface AuthRepository extends JpaRepository<Users , UUID>{
     );
 
     Optional<Users> findByEmail(String email);
-    
+
+    Optional<Users> findByProviderId(String subId);
 }
